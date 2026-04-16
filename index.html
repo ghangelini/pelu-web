@@ -237,6 +237,193 @@
                 flex: 0 0 calc(33.333% - 1.35rem);
             }
         }
+
+        /* Chatbot Styles */
+        #chatbot-bubble {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 1000;
+            background: var(--primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #chatbot-bubble:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        #chatbot-window {
+            position: fixed;
+            bottom: 100px;
+            right: 32px;
+            width: 350px;
+            max-width: calc(100vw - 64px);
+            height: 500px;
+            max-height: calc(100vh - 150px);
+            z-index: 1001;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            font-family: 'Fredoka', cursive;
+        }
+
+        #chatbot-window.active {
+            display: flex;
+            animation: chat-appear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes chat-appear {
+            from { transform: translateY(20px) scale(0.9); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .chat-header {
+            background: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(248, 249, 250, 0.95);
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            line-height: 1.4;
+            animation: message-pop 0.3s ease-out;
+        }
+
+        @keyframes message-pop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background: white;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            color: var(--dark);
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: var(--secondary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-footer {
+            background: white;
+            padding: 15px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .chat-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .option-btn {
+            background: #f1f3f5;
+            border: 1px solid #dee2e6;
+            color: #495057;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: 1px solid #dee2e6;
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary);
+        }
+
+        .send-btn {
+            background: var(--primary);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 20px;
+            width: fit-content;
+            margin-bottom: 10px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: #adb5bd;
+            border-radius: 50%;
+            animation: dot-bounce 1.4s infinite;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dot-bounce {
+            0%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-5px); }
+        }
     </style>
 </head>
 
@@ -736,6 +923,43 @@
         </svg>
     </a>
 
+    <!-- Chatbot Widget -->
+    <div id="chatbot-bubble" aria-label="Abrir chat">
+        <span>🤖</span>
+    </div>
+
+    <div id="chatbot-window">
+        <div class="chat-header">
+            <div class="flex items-center gap-2">
+                <span class="text-xl">🤖</span>
+                <div class="leading-tight">
+                    <p class="font-bold text-sm">Asistente Josefina</p>
+                    <p class="text-[10px] opacity-80">En línea</p>
+                </div>
+            </div>
+            <button id="close-chat" class="text-white hover:rotate-90 transition">✕</button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot">
+                ¡Hola! Soy el asistente virtual de Josefina ✂️. ¿En qué puedo ayudarte hoy?
+            </div>
+        </div>
+        <div class="chat-footer">
+            <div class="chat-options" id="chat-options">
+                <button class="option-btn" onclick="handleOption('precio')">💰 Precio</button>
+                <button class="option-btn" onclick="handleOption('horarios')">⏰ Horarios</button>
+                <button class="option-btn" onclick="handleOption('turnos')">📅 ¿Turnos?</button>
+                <button class="option-btn" onclick="handleOption('bebes')">👶 ¿Bebés?</button>
+                <button class="option-btn" onclick="handleOption('padres')">👨 ¿Padres?</button>
+                <button class="option-btn" onclick="handleOption('contacto')">💬 Contacto</button>
+            </div>
+            <form class="chat-input-container" id="chat-form">
+                <input type="text" class="chat-input" id="chat-input" placeholder="Escribe tu duda aquí..." autocomplete="off">
+                <button type="submit" class="send-btn">➔</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Custom Cursor & Logic Script -->
     <script>
         const dot = document.getElementById('cursor-dot');
@@ -954,6 +1178,102 @@
             dot.style.display = 'none';
             outline.style.display = 'none';
         }
+
+        // --- Chatbot Logic ---
+        const chatbotBubble = document.getElementById('chatbot-bubble');
+        const chatbotWindow = document.getElementById('chatbot-window');
+        const closeChat = document.getElementById('close-chat');
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const chatMessages = document.getElementById('chat-messages');
+
+        const responses = {
+            'precio': "El valor del corte hoy ronda entre **$17.000 y $20.000**. ¡Pero tenemos **descuentos especiales** si abonas en efectivo! 💸",
+            'horarios': "Atendemos de: \n📅 **Lun a Vie:** 10:00 a 19:30 \n✨ **Sábados:** 10:00 a 20:00 \n¡Te esperamos! 💈",
+            'turnos': "No nos manejamos con turnos previos. Atendemos directamente por **orden de llegada**. ¡Venite cuando quieras! 🚶‍♂️",
+            'bebes': "¡Sí! Somos especialistas en **primeros cortes**. Pelamos bebés desde recién nacidos en sillitas especiales y les damos un **diploma de regalo** 👶📜",
+            'padres': "¡Claro que sí! Sergio también les corta el cabello a los padres. ¡Un cambio de look para toda la familia! 👨‍👦",
+            'contacto': "Podés llamarnos al **11 5568 8329** o enviarnos un **WhatsApp** haciendo click en el botón verde de abajo a la izquierda. 💬",
+            'default': "No estoy seguro de entender... Pero podés contactarnos directamente por **WhatsApp** para una mejor atención. 😊"
+        };
+
+        chatbotBubble.addEventListener('click', () => {
+            chatbotWindow.classList.toggle('active');
+            if (chatbotWindow.classList.contains('active')) {
+                chatInput.focus();
+            }
+        });
+
+        closeChat.addEventListener('click', () => {
+            chatbotWindow.classList.remove('active');
+        });
+
+        function addMessage(text, side) {
+            const msg = document.createElement('div');
+            msg.className = `message ${side}`;
+            msg.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+            chatMessages.appendChild(msg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            const typing = document.createElement('div');
+            typing.className = 'typing-indicator';
+            typing.id = 'typing';
+            typing.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+            chatMessages.appendChild(typing);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return typing;
+        }
+
+        function handleOption(key) {
+            const optionText = {
+                'precio': '💰 ¿Cuánto cuesta el corte?',
+                'horarios': '⏰ ¿Qué horarios tienen?',
+                'turnos': '📅 ¿Necesito turno?',
+                'bebes': '👶 ¿Cortan a bebés?',
+                'padres': '👨 ¿Cortan a padres?',
+                'contacto': '💬 Quiero contactarlos'
+            }[key];
+
+            addMessage(optionText, 'user');
+            
+            const typing = showTyping();
+            setTimeout(() => {
+                typing.remove();
+                addMessage(responses[key], 'bot');
+            }, 1000);
+        }
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = chatInput.value.trim().toLowerCase();
+            if (!text) return;
+
+            addMessage(chatInput.value, 'user');
+            chatInput.value = '';
+
+            const typing = showTyping();
+            setTimeout(() => {
+                typing.remove();
+                
+                let foundKey = 'default';
+                if (text.includes('precio') || text.includes('cuanto') || text.includes('sale') || text.includes('costo')) foundKey = 'precio';
+                else if (text.includes('hora') || text.includes('abierto') || text.includes('cuando')) foundKey = 'horarios';
+                else if (text.includes('turno') || text.includes('cita') || text.includes('reserva')) foundKey = 'turnos';
+                else if (text.includes('bebe') || text.includes('recien') || text.includes('nene')) foundKey = 'bebes';
+                else if (text.includes('padre') || text.includes('papa') || text.includes('adulto')) foundKey = 'padres';
+                else if (text.includes('hola') || text.includes('buen')) {
+                    addMessage("¡Hola! ¿En qué puedo ayudarte? Podés elegir una opción del menú o preguntarme lo que quieras. 👋", 'bot');
+                    return;
+                }
+                
+                addMessage(responses[foundKey], 'bot');
+            }, 1000);
+        });
+
+        // Toggle global functions
+        window.handleOption = handleOption;
     </script>
 </body>
 
