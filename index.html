@@ -951,6 +951,8 @@
                 <button class="option-btn" onclick="handleOption('turnos')">📅 ¿Turnos?</button>
                 <button class="option-btn" onclick="handleOption('bebes')">👶 ¿Bebés?</button>
                 <button class="option-btn" onclick="handleOption('padres')">👨 ¿Padres?</button>
+                <button class="option-btn" onclick="handleOption('dibujos')">🎨 Dibujos</button>
+                <button class="option-btn" onclick="handleOption('servicios')">💇‍♂️ Otros</button>
                 <button class="option-btn" onclick="handleOption('contacto')">💬 Contacto</button>
             </div>
             <form class="chat-input-container" id="chat-form">
@@ -1196,6 +1198,8 @@
             'contacto': "Podés llamarnos al **11 5568 8329** o enviarnos un **WhatsApp** haciendo click en el botón verde de abajo a la izquierda. 💬",
             'ubicacion': "Estamos en **Basavilbaso 2078, Lanús Este**. ¡Podés ver el mapa interactivo al final de esta página! 📍",
             'pago': "Aceptamos **efectivo** (con descuento 💰), transferencia y otros medios. Consultanos en el local.",
+            'dibujos': "¡Sí! Sergio hace **dibujos, rayas y diseños personalizados** (tribales) para que los chicos salgan con toda la onda. 🎨⚡",
+            'servicios': "En Josefina nos enfocamos en el corte y estilo. **No realizamos** lavados ni peinados complejos de fiesta, pero ¡los cortes son los mejores de Lanús! ✂️⭐",
             'default': "No estoy seguro de entender... Pero podés contactarnos directamente por **WhatsApp** para una mejor atención. 😊"
         };
 
@@ -1235,7 +1239,9 @@
                 'turnos': '📅 ¿Necesito turno?',
                 'bebes': '👶 ¿Cortan a bebés?',
                 'padres': '👨 ¿Cortan a padres?',
-                'contacto': '💬 Quiero contactarlos'
+                'contacto': '💬 Quiero contactarlos',
+                'dibujos': '🎨 ¿Hacen dibujos/rayas?',
+                'servicios': '💇‍♂️ Otros servicios'
             }[key];
 
             addMessage(optionText, 'user');
@@ -1260,14 +1266,16 @@
                 typing.remove();
                 
                 let foundKey = 'default';
-                if (text.includes('precio') || text.includes('cuanto') || text.includes('sale') || text.includes('costo') || text.includes('cobran')) foundKey = 'precio';
+                if (text.includes('precio') || text.includes('cuanto') || text.includes('sale') || text.includes('costo') || text.includes('cobran') || text.includes('valor')) foundKey = 'precio';
                 else if (text.includes('hora') || text.includes('abierto') || text.includes('cuando') || text.includes('tiempo')) foundKey = 'horarios';
                 else if (text.includes('turno') || text.includes('cita') || text.includes('reserva') || text.includes('programar')) foundKey = 'turnos';
                 else if (text.includes('bebe') || text.includes('recien') || text.includes('nene') || text.includes('chiquito')) foundKey = 'bebes';
                 else if (text.includes('padre') || text.includes('papa') || text.includes('adulto') || text.includes('grande')) foundKey = 'padres';
                 else if (text.includes('contacto') || text.includes('whatsapp') || text.includes('escribir') || text.includes('llamar') || text.includes('telefono') || text.includes('celu')) foundKey = 'contacto';
                 else if (text.includes('donde') || text.includes('ubicacion') || text.includes('direccion') || text.includes('lugar') || text.includes('queda') || text.includes('llego')) foundKey = 'ubicacion';
-                else if (text.includes('pago') || text.includes('pagar') || text.includes('efectivo') || text.includes('tarjeta') || text.includes('transferencia')) foundKey = 'pago';
+                else if (text.includes('pago') || text.includes('pagar') || text.includes('efectivo') || text.includes('tarjeta') || text.includes('transferencia') || text.includes('descuento')) foundKey = 'pago';
+                else if (text.includes('dibujo') || text.includes('raya') || text.includes('diseño') || text.includes('tribal')) foundKey = 'dibujos';
+                else if (text.includes('lavado') || text.includes('lavar') || text.includes('peinado') || text.includes('fiesta') || text.includes('evento')) foundKey = 'servicios';
                 else if (text.includes('hola') || text.includes('buen')) {
                     addMessage("¡Hola! ¿En qué puedo ayudarte? Podés elegir una opción del menú o preguntarme lo que quieras. 👋", 'bot');
                     return;
