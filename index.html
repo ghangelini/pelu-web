@@ -1194,6 +1194,8 @@
             'bebes': "¡Sí! Somos especialistas en **primeros cortes**. Pelamos bebés desde recién nacidos en sillitas especiales y les damos un **diploma de regalo** 👶📜",
             'padres': "¡Claro que sí! Sergio también les corta el cabello a los padres. ¡Un cambio de look para toda la familia! 👨‍👦",
             'contacto': "Podés llamarnos al **11 5568 8329** o enviarnos un **WhatsApp** haciendo click en el botón verde de abajo a la izquierda. 💬",
+            'ubicacion': "Estamos en **Basavilbaso 2078, Lanús Este**. ¡Podés ver el mapa interactivo al final de esta página! 📍",
+            'pago': "Aceptamos **efectivo** (con descuento 💰), transferencia y otros medios. Consultanos en el local.",
             'default': "No estoy seguro de entender... Pero podés contactarnos directamente por **WhatsApp** para una mejor atención. 😊"
         };
 
@@ -1258,11 +1260,14 @@
                 typing.remove();
                 
                 let foundKey = 'default';
-                if (text.includes('precio') || text.includes('cuanto') || text.includes('sale') || text.includes('costo')) foundKey = 'precio';
-                else if (text.includes('hora') || text.includes('abierto') || text.includes('cuando')) foundKey = 'horarios';
-                else if (text.includes('turno') || text.includes('cita') || text.includes('reserva')) foundKey = 'turnos';
-                else if (text.includes('bebe') || text.includes('recien') || text.includes('nene')) foundKey = 'bebes';
-                else if (text.includes('padre') || text.includes('papa') || text.includes('adulto')) foundKey = 'padres';
+                if (text.includes('precio') || text.includes('cuanto') || text.includes('sale') || text.includes('costo') || text.includes('cobran')) foundKey = 'precio';
+                else if (text.includes('hora') || text.includes('abierto') || text.includes('cuando') || text.includes('tiempo')) foundKey = 'horarios';
+                else if (text.includes('turno') || text.includes('cita') || text.includes('reserva') || text.includes('programar')) foundKey = 'turnos';
+                else if (text.includes('bebe') || text.includes('recien') || text.includes('nene') || text.includes('chiquito')) foundKey = 'bebes';
+                else if (text.includes('padre') || text.includes('papa') || text.includes('adulto') || text.includes('grande')) foundKey = 'padres';
+                else if (text.includes('contacto') || text.includes('whatsapp') || text.includes('escribir') || text.includes('llamar') || text.includes('telefono') || text.includes('celu')) foundKey = 'contacto';
+                else if (text.includes('donde') || text.includes('ubicacion') || text.includes('direccion') || text.includes('lugar') || text.includes('queda') || text.includes('llego')) foundKey = 'ubicacion';
+                else if (text.includes('pago') || text.includes('pagar') || text.includes('efectivo') || text.includes('tarjeta') || text.includes('transferencia')) foundKey = 'pago';
                 else if (text.includes('hola') || text.includes('buen')) {
                     addMessage("¡Hola! ¿En qué puedo ayudarte? Podés elegir una opción del menú o preguntarme lo que quieras. 👋", 'bot');
                     return;
