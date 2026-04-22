@@ -586,7 +586,7 @@
                     onerror="this.src='https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&q=80&w=1200'">
                 <div
                     class="absolute -bottom-6 -right-2 md:-bottom-12 md:-right-12 bg-[#e91e63] text-white p-6 md:p-10 rounded-custom shadow-2xl transform rotate-3 hover:rotate-0 transition duration-500">
-                    <p class="text-xl md:text-4xl font-black leading-tight uppercase">¡Desde<br>1980!</p>
+                    <p class="text-xl md:text-4xl font-black leading-tight uppercase">¡Desde<br>1979!</p>
                 </div>
             </div>
         </div>
@@ -828,7 +828,7 @@
                     <div class="w-20 h-20 bg-pink-100 rounded-3xl flex items-center justify-center text-4xl">📅</div>
                     <div>
                         <h3 class="text-2xl font-black text-[#e91e63] uppercase">Lunes a Viernes</h3>
-                        <p class="text-4xl font-black text-[#2F3E46] mt-2 tracking-tighter">10:00 - 19:30</p>
+                        <p class="text-4xl font-black text-[#2F3E46] mt-2 tracking-tighter">10:00 - 19:00</p>
                     </div>
                 </div>
                 <div
@@ -836,7 +836,7 @@
                     <div class="w-20 h-20 bg-teal-100 rounded-3xl flex items-center justify-center text-4xl">✨</div>
                     <div>
                         <h3 class="text-2xl font-black text-[#00bcd4] uppercase">Sábados</h3>
-                        <p class="text-4xl font-black text-[#2F3E46] mt-2 tracking-tighter">10:00 - 20:00</p>
+                        <p class="text-4xl font-black text-[#2F3E46] mt-2 tracking-tighter">10:00 - 19:00</p>
                     </div>
                 </div>
             </div>
@@ -869,8 +869,8 @@
                             class="w-16 h-16 bg-[#00bcd4] rounded-3xl flex items-center justify-center text-3xl shadow-lg shadow-teal-200">
                             ⏰</div>
                         <div>
-                            <p class="text-xl font-bold text-[#2F3E46]">Lun a Vie: 10:00 - 19:30</p>
-                            <p class="text-xl font-bold text-[#2F3E46]">Sábados: 10:00 - 20:00</p>
+<p class="text-xl font-bold text-[#2F3E46]">Lun a Vie: 10:00 - 19:00</p>
+                        <p class="text-xl font-bold text-[#2F3E46]">Sábados: 10:00 - 19:00</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-6 justify-center lg:justify-start">
@@ -996,10 +996,10 @@
 
             let isOpen = false;
 
-            if (day >= 1 && day <= 5) { // Lun-Vie 10:00 - 19:30
-                if (time >= 10 && time < 19.5) isOpen = true;
-            } else if (day === 6) { // Sab 10 - 20
-                if (time >= 10 && time < 20) isOpen = true;
+            if (day >= 1 && day <= 5) { // Lun-Vie 10:00 - 19:00
+                if (time >= 10 && time < 19) isOpen = true;
+            } else if (day === 6) { // Sab 10 - 19
+                if (time >= 10 && time < 19) isOpen = true;
             }
 
             if (isOpen) {
@@ -1191,8 +1191,8 @@
         const chatMessages = document.getElementById('chat-messages');
 
         const responses = {
-            'precio': "El valor del corte hoy ronda entre **$17.000 y $20.000**. ¡Pero tenemos **descuentos especiales** si abonas en efectivo! 💸",
-            'horarios': "Atendemos de: \n📅 **Lun a Vie:** 10:00 a 19:30 \n✨ **Sábados:** 10:00 a 20:00 \n¡Te esperamos! 💈",
+            'precio': "Los precios arrancan desde $17.000",
+            'horarios': "Atendemos de: \n📅 **Lun a Vie:** 10:00 a 19:00 \n✨ **Sábados:** 10:00 a 19:00 \n¡Te esperamos! 💈",
             'turnos': "No nos manejamos con turnos previos. Atendemos directamente por **orden de llegada**. ¡Venite cuando quieras! 🚶‍♂️",
             'bebes': "¡Sí! Somos especialistas en **primeros cortes**. Pelamos bebés desde recién nacidos en sillitas especiales y les damos un **diploma de regalo** 👶📜",
             'padres': "¡Claro que sí! Sergio también les corta el cabello a los padres. ¡Un cambio de look para toda la familia! 👨‍👦",
